@@ -1,7 +1,7 @@
 Instructions:
 I’ve attached a CSV with pitch data for the month of July for the 2024 Padres. We are looking for you to create a small web application that will:
 
-- Have a small data structure for storing the data from the CSV.
+- ✅ Have a small data structure for storing the data from the CSV.
 - Have a backend that acts as the API layer that will serve this data. It should allow for some amount of filtering or sorting.
 - Have a front end capable of allowing users to interact with the data and analyze it more deeply in interesting ways. Pick one or two aspects about the data you'd like to focus on -- some ideas could be pitcher's pitch type performance, batter's swing or contact performance, pitcher vs batter matchups, maybe some kind of leaderboard or each player's performance over time, etc. Its up to you really. We encourage you to make this part visually appealing (perhaps by using d3 or other visualization libraries).
 - Be easy to setup and run quickly without errors.
