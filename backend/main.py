@@ -6,6 +6,11 @@ import sqlite3
 import pandas as pd
 from pydantic import BaseModel
 from typing import Annotated, List
+from sqlalchemy.orm import Session
+from database import get_db
+# from models import Pitch #pydantic
+from db_models import Pitch
+
 
 app = FastAPI()
 
@@ -36,15 +41,12 @@ pear = Fruit(name="pear")
 banana = Fruit(name="banana")
 memory_db = {"fruits": [apple, pear, banana]}
 
-def csv_to_db():
-    conn = sqlite3.connect(
-        "pitch_db.db"
-    )
 
-    pitch_data = pd.read_csv(
-        "../padres-july-2024-pitch-data.csv"
-    )
-    pitch_data.to_sql('pitches', conn, if_exists='replace', index=False)
+def csv_to_db():
+    conn = sqlite3.connect("pitch_db.db")
+
+    pitch_data = pd.read_csv("../padres-july-2024-pitch-data.csv")
+    pitch_data.to_sql("pitches", conn, if_exists="replace", index=False)
 
     conn.close()
 
@@ -58,6 +60,12 @@ def read_root():
 @app.get("/fruits", response_model=Fruits)
 def get_fruilts():
     return Fruits(fruits=memory_db["fruits"])
+
+
+@app.get("/test")
+def test(db: Session = Depends(get_db)):
+    pitches = db.query(Pitch).limit(10).all()
+    return pitches
 
 
 if __name__ == "__main__":
