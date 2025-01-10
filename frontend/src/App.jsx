@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import "./index.css";
-import PitchList from "./components/PitchList";
 import PadresBatters from "./components/PadresBatters";
+import BatEvents from "./components/BatEventsHomeVsAway";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [currentBatter, setCurrentBatter] = useState(null);
 
+  console.log(currentBatter);
   return (
     <>
-      {/* <h1>This is my app! Hello</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-      </div> */}
-      {/* <PitchList /> */}
-      <PadresBatters />
+      <div className="container mx-auto">
+        <PadresBatters
+          currentBatter={currentBatter}
+          setCurrentBatter={setCurrentBatter}
+        />
+        <BatEvents currentBatter={currentBatter} />
+      </div>
     </>
   );
 }
