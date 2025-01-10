@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-// import './App.css'
-import PitchList from './components/PitchList'
-import PadresBatters from './components/PadresBatters';
+import React, { useState } from "react";
+import "./index.css";
+import PitchList from "./components/PitchList";
+import PadresBatters from "./components/PadresBatters";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -17,7 +17,7 @@ function App() {
       {/* <PitchList /> */}
       <PadresBatters />
     </>
-  )
+  );
 }
 
 export default App;
