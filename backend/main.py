@@ -1,27 +1,13 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException, Depends, Query
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import create_engine
 import sqlite3
 import pandas as pd
-from pydantic import BaseModel
-from typing import Annotated, List
-from sqlalchemy.orm import Session
-from database import get_db
-# from models import Pitch #pydantic
-from db_models import Pitch
+import pitch_routers
 
 
 app = FastAPI()
-
-
-# pydantic models
-class Fruit(BaseModel):
-    name: str
-
-
-class Fruits(BaseModel):
-    fruits: List[Fruit]
+app.include_router(pitch_routers.router)
 
 
 # cors
@@ -35,13 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# database
-apple = Fruit(name="apple")
-pear = Fruit(name="pear")
-banana = Fruit(name="banana")
-memory_db = {"fruits": [apple, pear, banana]}
-
-
+# database setup
 def csv_to_db():
     conn = sqlite3.connect("pitch_db.db")
 
@@ -51,21 +31,10 @@ def csv_to_db():
     conn.close()
 
 
-# api endpoints
+# sample root endpoint
 @app.get("/")
 def read_root():
-    return "Hello World......"
-
-
-@app.get("/fruits", response_model=Fruits)
-def get_fruilts():
-    return Fruits(fruits=memory_db["fruits"])
-
-
-@app.get("/test")
-def test(db: Session = Depends(get_db)):
-    pitches = db.query(Pitch).limit(10).all()
-    return pitches
+    return "Hello World!"
 
 
 if __name__ == "__main__":

@@ -1,13 +1,17 @@
-# I don't actually need data validation, maybe at all for this project? Will not be adding data to this db
-
-# from pydantic import BaseModel
-# from datetime import date
-# from typing import Literal
+from pydantic import BaseModel
+from datetime import date
+from typing import Literal
 
 
-# class XXTestPitch(BaseModel):
-#     __tablename__ = 'pitches'
-#     guid: str
+class Batter(BaseModel):
+    batter_bam_id: int
+    batter_name_first: str
+    batter_name_last: str
+
+class Batters(BaseModel):
+    batters: list[Batter]
+
+
 
 # class Pitch(BaseModel):
 #     """
