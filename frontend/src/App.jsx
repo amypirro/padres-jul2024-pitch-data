@@ -7,7 +7,6 @@ import HeaderNav from "./components/Header";
 function App() {
   const [currentBatter, setCurrentBatter] = useState(null);
 
-  console.log(currentBatter);
   return (
     <>
       <HeaderNav />
