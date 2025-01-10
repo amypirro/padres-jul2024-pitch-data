@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, HTTPException, Depends, Query
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import sqlite3
 import pandas as pd
@@ -34,7 +34,7 @@ def csv_to_db():
 # sample root endpoint
 @app.get("/")
 def read_root():
-    return "Hello World!"
+    return "Go Padres! ⚾️"
 
 
 if __name__ == "__main__":

@@ -1,3 +1,5 @@
+// unused component
+
 import React, { useEffect, useState } from "react";
 import api from "../api.js";
 

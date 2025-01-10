@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./index.css";
 import PadresBatters from "./components/PadresBatters";
 import BatEvents from "./components/BatEventsHomeVsAway";
+import HeaderNav from "./components/Header";
 
 function App() {
   const [currentBatter, setCurrentBatter] = useState(null);
@@ -9,7 +10,8 @@ function App() {
   console.log(currentBatter);
   return (
     <>
-      <div className="container mx-auto">
+      <HeaderNav />
+      <div className="container mx-auto px-5">
         <PadresBatters
           currentBatter={currentBatter}
           setCurrentBatter={setCurrentBatter}

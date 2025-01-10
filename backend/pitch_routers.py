@@ -1,29 +1,25 @@
 from fastapi import (
     Depends,
     HTTPException,
-    status,
-    Response,
     APIRouter,
-    # Request,
 )
 import sqlalchemy as sqla
 from sqlalchemy.orm import Session
 from database import get_db
 from db_models import Pitch
-from models import Batter, Batters, BatterEvent, BatterEvents, BatterEventsTest
-import json
+from models import Batter, Batters, BatterEvents
 
 
 router = APIRouter(tags=["Pitches"], prefix="/api")
 
-petco_park_bam_id = 2680
 sd = "San Diego Padres"
-padres_batter_team_bam_id = 135
 
 
-# limited for now
 @router.get("/pitches/all")
 def get_all_pitches(db: Session = Depends(get_db)):
+    """
+    Get all rows(pitches) in the database, with most original properties. Currently limited to 10 results for faster querying. Unused.
+    """
     try:
         pitches = db.query(Pitch).limit(10).all()
     except:
@@ -35,9 +31,14 @@ def get_all_pitches(db: Session = Depends(get_db)):
     return {"pitches": pitches}
 
 
-# just get a list of padres batters
+# get a list of Padres batters
 @router.get("/batters/padres", response_model=Batters)
 def get_padres_batters(db: Session = Depends(get_db)):
+    """
+    Get all Padres batters.
+
+    Returns an object containing a list of Batter objects representing Padres batters in the dataset.
+    """
     try:
         batters = (
             db.query(
@@ -51,14 +52,17 @@ def get_padres_batters(db: Session = Depends(get_db)):
     except:
         raise HTTPException(
             status_code=500,
-            detail=f"Could not retrieve pitches",
+            detail=f"Could not retrieve batters",
         )
 
     return {"batters": batters}
 
 
-@router.get("/batters/{batterBam}/events", response_model=BatterEventsTest)
-def get_batter_events(batterBam: int, db: Session = Depends(get_db)):
+@router.get("/batters/{batter_bam}/events", response_model=BatterEvents)
+def get_batter_events(batter_bam: int, db: Session = Depends(get_db)):
+    """
+    Get counts of various batter outcomes, separated by home and away games, by player.
+    """
     try:
         bat_events = (
             db.query(
@@ -70,7 +74,7 @@ def get_batter_events(batterBam: int, db: Session = Depends(get_db)):
                 sqla.func.count(Pitch.event_type).label("event_counts"),
             )
             .filter(
-                sqla.and_(Pitch.batter_bam_id == batterBam, Pitch.terminating == True)
+                sqla.and_(Pitch.batter_bam_id == batter_bam, Pitch.terminating == True)
             )
             .group_by(Pitch.event_type, Pitch.bottom)
             .all()
@@ -83,7 +87,7 @@ def get_batter_events(batterBam: int, db: Session = Depends(get_db)):
 
     if not bat_events:
         raise HTTPException(
-            status_code=404, detail="Player not found or no bat events for player"
+            status_code=404, detail="Player not found or no bat events found for player"
         )
 
     event_categories = {
@@ -105,10 +109,6 @@ def get_batter_events(batterBam: int, db: Session = Depends(get_db)):
             elif p.bottom == False:
                 away_events[p.event_type] = p.event_counts
 
-    # print("***************** BATTERS!!!!!", bat_events)
-    # print("@@@@@@@@@@@@@@@@@ home_events:", home_events)
-    # print("&&&&&&&&&&&&&&&&& away_events:", away_events)
-    # return {"batter_events": bat_events}
     return {
         "batter": Batter(
             batter_bam_id=bat_events[0].batter_bam_id,
@@ -118,14 +118,3 @@ def get_batter_events(batterBam: int, db: Session = Depends(get_db)):
         "home_events": home_events,
         "away_events": away_events,
     }
-
-
-# @router.get("pitches/to-padres")
-# def get_padres_batters(db: Session = Depends(get_db)):
-#     try:
-#         pass
-#     except:
-#         raise HTTPException(
-#             status_code=500,
-#             detail=f"Could not retrieve pitches",
-#         )
