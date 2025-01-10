@@ -9,19 +9,19 @@ export default function PadresBatters({
   const [loading, setLoading] = useState(false);
   const [batters, setBatters] = useState([]);
 
-  const fetchPadresBatters = async () => {
-    try {
-      setLoading(true);
-      const response = await api.get("/api/batters/padres");
-      setBatters(response.data.batters);
-    } catch (error) {
-      console.error("Error fetching batters:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchPadresBatters = async () => {
+      try {
+        setLoading(true);
+        const response = await api.get("/api/batters/padres");
+        setBatters(response.data.batters);
+      } catch (error) {
+        console.error("Error fetching batters:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchPadresBatters();
   }, []);
 
@@ -34,10 +34,10 @@ export default function PadresBatters({
       <div className="border-b border-gray-200 pb-5">
         <h2 className="text-lg font-semibold text-gray-900">Padres Batters</h2>
         <p className="mt-2 max-w-4xl text-sm text-gray-500">
-          Select a Padres player to compare various batting outcomes in July 2024, at Petco Park vs Away.
+          Select a Padres player to compare various batting outcomes in July
+          2024, at Petco Park vs Away.
         </p>
       </div>
-      {/* <h2 className="text-md font-medium text-slate-900">Padres Batters</h2> */}
       <ul
         role="list"
         className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-5"

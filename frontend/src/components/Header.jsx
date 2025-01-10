@@ -2,16 +2,6 @@ import { Disclosure } from "@headlessui/react";
 import favicon from "../../public/favicon.ico";
 
 export default function HeaderNav() {
-  const navigation = [
-    { name: "Dashboard", href: "#", current: true },
-    { name: "Team", href: "#", current: false },
-    { name: "Projects", href: "#", current: false },
-    { name: "Calendar", href: "#", current: false },
-  ];
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
   return (
     <Disclosure as="nav" className="bg-[#2F241D]">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

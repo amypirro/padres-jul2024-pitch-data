@@ -31,6 +31,7 @@ Thank you for the opportunity to create this application for your consideration 
 
 - use Docker to run project
 - considerations for eventual deployment, e.g. use PostgreSQL instead of SQLite
+- backend: moving business logic from pitch_routers.py to separate service
 - more robust error handling, backend and frontend
 - learning/using D3
 - frontend: collapse Padres players cards into a dropdown on smaller screens

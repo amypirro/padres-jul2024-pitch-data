@@ -1,4 +1,4 @@
-// unused component
+// unused component | for debugging
 
 import React, { useEffect, useState } from "react";
 import api from "../api.js";
@@ -6,16 +6,15 @@ import api from "../api.js";
 export default function PitchList() {
   const [pitches, setPitches] = useState([]);
 
-  const fetchPitches = async () => {
-    try {
-      const response = await api.get("/api/pitches/all");
-      setPitches(response.data.pitches);
-    } catch (error) {
-      console.error("Error fetching pitches:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchPitches = async () => {
+      try {
+        const response = await api.get("/api/pitches/all");
+        setPitches(response.data.pitches);
+      } catch (error) {
+        console.error("Error fetching pitches:", error);
+      }
+    };
     fetchPitches();
   }, []);
 
