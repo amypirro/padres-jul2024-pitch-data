@@ -22,7 +22,7 @@ Thank you for the opportunity to create this application for your consideration 
 6. Enter command: `python main.py`
     - this will run the backend and show logs in your terminal
     - navigate to http://localhost:8000/docs in browser for FastAPI docs (endpoints)
-7. In new terminal enter command: `cd ../frontend`
+7. In new terminal enter command: `cd frontend`
 8. Enter command: `npm install`
 9. Enter command: `npm run dev`
 10. Navigate to http://localhost:5173/ in browser to view app

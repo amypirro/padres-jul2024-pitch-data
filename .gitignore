@@ -171,3 +171,5 @@ cython_debug/
 .pypirc
 
 backend/pitch_db.db
+
+frontend/.vite/
